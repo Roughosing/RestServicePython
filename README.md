@@ -16,7 +16,7 @@ To run application, start the Manager. This will start the flask app and create 
 
 Since my computer contains only a QuadCore Processor, I was only able to get to 4 Worker nodes (more could be added, but with a quad core only 4 processes were able to be computed concurrently so the decrease in runtime begins to level off after 4 workers) before overloading the processor. With the addition of each worker node, the runtime for calculating the complexity of each commit in a repo is considerably cut. The image belows helps in indicating the reduction of computation time with the addition of each worker.
 
-![Results](/?raw=true "Results")
+![Results](/Roughosing/RestServicePython/blob/master/CC_Results.png?raw=true "Results")
 
 As the server needs to be restarted each time the workers complete their process, the time taken for each n workers to complete the task was logged by the code, then graphed manually using Google sheets, rather than using pyplot. 
 
