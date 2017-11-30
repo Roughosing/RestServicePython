@@ -61,8 +61,8 @@ def send_results(result):
     post = requests.post('http://127.0.0.1:5000/results', json=result)
 
 if __name__ == '__main__':
-    #bool = True
-    #while bool:
+    bool = True
+    while bool:
         repo = set_repo()
         work, id = get_work(repo)
         print(id)
