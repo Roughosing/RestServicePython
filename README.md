@@ -1,7 +1,7 @@
 # RestServicePython
 Python Worker-Manager distributed system for calculating code complexity
 
-This python code requires a few dependecies in order to run, most notably Dask and Radon. 
+This python code requires a few dependecies in order to run, most notably Flask and Radon. 
 If you do not currently have these installed on python you can add both of them via pip as so:
     
     pip install radon       # API for calculating code complexity
@@ -12,9 +12,13 @@ If you do not currently have these installed on python you can add both of them 
     
     pip install pygit2      # API for pulling git repos and walking through commits
 
-To run application, start the Manager. This will start the flask app and create the server on a locahost network with port 5000. Once the server is running spawn in Worker nodes, which will request work from the Manager. The Manager and Workers can be spawned in by running the code on an IDE such as PyCharm, or by executing in the terminal.
+To run application, start the Manager. This will start the flask app and create the server on a locahost network with port 5000. Once the server is running spawn in Worker nodes, which will request work from the Manager. The Manager and Workers can be spawned in by running the code on an IDE such as PyCharm, or by executing in the terminal (ALWAYS start a Manager before starting any Workers).
 
-Since my computer contains only a QuadCore Processor, I was only able to get up to 4 Worker nodes processing the files concurrently before overloading the processor. With the addition of each worker node the worktime for calculating the complexity of each commit in a repo is considerably cut.
+Since my computer contains only a QuadCore Processor, I was only able to get to 4 Worker nodes (more could be added, but with a quad core only 4 processes were able to be computed concurrently so the decrease in runtime begins to level off after 4 workers) before overloading the processor. With the addition of each worker node, the runtime for calculating the complexity of each commit in a repo is considerably cut. The image belows helps in indicating the reduction of computation time with the addition of each worker.
+
+![Results](/?raw=true "Results")
+
+As the server needs to be restarted each time the workers complete their process, the time taken for each n workers to complete the task was logged by the code, then graphed manually using Google sheets, rather than using pyplot. 
 
 Post Script:
 
