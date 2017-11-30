@@ -4,10 +4,10 @@ Python Worker-Manager distributed system for calculating code complexity
 This python code requires a few dependecies in order to run, most notably Dask and Radon. 
 If you do not currently have these installed on python you can add both of them via pip as so:
     
-    pip install radon
+    pip install radon       # API for calculating code complexity
     
-    pip stall dask
+    pip install flask       # API for creating RESTful web application
     
-You will also need Dask.Distributed, which can be installed as below:
-
-    pip install dask distributed
+    pip install requests    # handle GET, POST requests over http
+    
+    pip install pygit2      # API for pulling git repos and walking through commits
