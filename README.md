@@ -26,6 +26,10 @@ Since my computer contains only a QuadCore Processor, I was only able to get to 
 
 As the server needs to be restarted each time the workers complete their process, the time taken for each n workers to complete the task was logged by the code, then graphed manually using Google sheets, rather than using pyplot. 
 
+The results i.e. a list of the cyclomatic complexities for each .py file in the commit are sent back to the Manager using the POST request, these are then added to a list of all the other results computed by the workers.
+
+N.B. The above graph indicating computation time for the n amount of workers was made prior to finalizing the and fixing the POST request of sending the results back to the Manager. Although as the POST request would take an equal amount of time for each worker, it would only scale the results and not alter their ratios, as such the graph is fine as is.
+
 Post Script:
 
     - Costraints
