@@ -56,15 +56,13 @@ def do_work(work):
         results.append(compute_complexity(file))
     return results
 
-def send_results():
-    result = {'Result' : 'Success'}
-    result = json.dumps(result)
-    post = requests.post('http://127.0.0.1:5000/results', data=result)
-    print(post.text)
+def send_results(result):
+    result = {'Result' : result}
+    post = requests.post('http://127.0.0.1:5000/results', json=result)
 
 if __name__ == '__main__':
-    bool = True
-    while bool:
+    #bool = True
+    #while bool:
         repo = set_repo()
         work, id = get_work(repo)
         print(id)
@@ -72,4 +70,4 @@ if __name__ == '__main__':
             bool = False
             print("Process Terminated")
         result = do_work(work)
-        #send_results()
+        send_results(result)

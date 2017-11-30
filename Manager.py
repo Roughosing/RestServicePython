@@ -1,7 +1,6 @@
-from flask import Flask, jsonify
+from flask import Flask, request, jsonify
 from time import time
 from pygit2 import Repository, clone_repository
-import requests
 
 app = Flask(__name__)
 
@@ -39,11 +38,13 @@ def give_work():
 
 @app.route('/results', methods=['POST'])
 def store_result():
-    result = requests.get('http://127.0.0.1:5000/results', params={'key': 'value'})
-    print(result.text)
-    return result.text
+    result = request.json
+    result_list.append(result)
+    return 'Submission Received'
 
 if __name__ == '__main__':
     next_task = 0
     start_time = time()
+    global result_list
+    result_list = []
     app.run(threaded=True, debug=True)
