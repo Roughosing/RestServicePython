@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask, jsonify
 from time import time
 from pygit2 import Repository, clone_repository
 import requests
@@ -27,16 +27,12 @@ def get_commits(repo):
 def give_work():
     repo = set_repo()
     commits = get_commits(repo)
-
     global next_task
 
     try:
         commit_hash = commits[next_task]
         next_task += 1
-        if commit_hash != None:
-            return jsonify({'commit': str(commit_hash.id), 'id': next_task})
-        else:
-            return None
+        return jsonify({'commit': str(commit_hash.id), 'id': next_task})
     except:
         return None
 

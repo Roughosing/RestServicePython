@@ -1,7 +1,6 @@
 from radon.metrics import mi_visit
 from radon.complexity import cc_visit, cc_rank
 from pygit2 import Repository, clone_repository
-from flask import jsonify
 import requests, json
 
 def set_repo():
@@ -22,7 +21,6 @@ def compute_complexity(source):
 
     for func in blocks:
         result.append(func.name+"- CC Rank:"+cc_rank(func.complexity))
-
     return result
 
 def get_data(tree, repo):
@@ -65,11 +63,13 @@ def send_results():
     print(post.text)
 
 if __name__ == '__main__':
-    while True:
+    bool = True
+    while bool:
         repo = set_repo()
         work, id = get_work(repo)
-        if work == None:
-            exit(0)
-        result = do_work(work)
         print(id)
+        if id > 350:
+            bool = False
+            print("Process Terminated")
+        result = do_work(work)
         #send_results()
