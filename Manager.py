@@ -6,6 +6,7 @@ import requests
 app = Flask(__name__)
 
 global next_task
+global start_time
 
 def set_repo():
     try:
@@ -32,6 +33,9 @@ def give_work():
     try:
         commit_hash = commits[next_task]
         next_task += 1
+        if next_task == 350:
+            end_time = time() - start_time
+            print(end_time)
         return jsonify({'commit': str(commit_hash.id), 'id': next_task})
     except:
         return None
@@ -44,4 +48,5 @@ def store_result():
 
 if __name__ == '__main__':
     next_task = 0
+    start_time = time()
     app.run(threaded=True, debug=True)
