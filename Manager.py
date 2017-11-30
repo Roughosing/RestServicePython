@@ -1,20 +1,11 @@
-from flask import Flask, request, jsonify, abort
-from flask_restful import Resource, Api
-from radon.metrics import mi_visit
-from radon.complexity import cc_visit, cc_rank
+from flask import Flask, request, jsonify
 from time import time
-from pygit2 import Repository, clone_repository, Index
+from pygit2 import Repository, clone_repository
+import requests
 
 app = Flask(__name__)
 
-def compute_complexity(source):
-    # get cc blocks
-    blocks = cc_visit(source)
-    # get MI score
-    mi = mi_visit(source, True)
-
-    for func in blocks:
-        print(func.name, "- CC Rank:", cc_rank(func.complexity))
+global next_task
 
 def set_repo():
     try:
@@ -25,34 +16,36 @@ def set_repo():
         repo = clone_repository(repo_url, repo_path)
     return repo
 
-def get_data(tree, repo):
-    sources = []
-    for entry in tree:
-        if ".py" in entry.name:
-            sources.append(entry)
-        if "." not in entry.name:
-           if entry.type == 'tree':
-                new_tree = repo.get(entry.id)
-                sources += (get_data(new_tree, repo))
-    return sources
+def get_commits(repo):
+    commits = []
+    for commit in repo.walk(repo.head.target):
+        commits.append(repo.get(commit.id))
+    return commits
 
-@app.route('/')
-def welcome():
+
+@app.route('/work' , methods=['GET'])
+def give_work():
     repo = set_repo()
-    commit = repo.revparse_single('HEAD').id
-    #print(commit)
-    commit_obj = repo.get("d473be0c3807ee546e90196b2215fa55ca827f5d")
-    tree = commit_obj.tree
+    commits = get_commits(repo)
 
-    sources = get_data(tree, repo)
-    files = []
-    for source in sources:
-        files.append(repo[source.id].data.decode("utf-8"))
+    global next_task
 
-    for file in files:
-        compute_complexity(file)
+    try:
+        commit_hash = commits[next_task]
+        next_task += 1
+        if commit_hash != None:
+            return jsonify({'commit': str(commit_hash.id), 'id': next_task})
+        else:
+            return None
+    except:
+        return None
 
-    return 'Welcome'
+@app.route('/results', methods=['POST'])
+def store_result():
+    result = requests.get('http://127.0.0.1:5000/results', params={'key': 'value'})
+    print(result.text)
+    return result.text
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    next_task = 0
+    app.run(threaded=True, debug=True)
