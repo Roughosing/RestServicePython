@@ -5,9 +5,6 @@ import requests
 
 app = Flask(__name__)
 
-global next_task
-global start_time
-
 def set_repo():
     try:
         repo = Repository('./repo')
