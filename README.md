@@ -24,7 +24,7 @@ Since my computer contains only a QuadCore Processor, I was only able to get to 
 
 ![Results](https://github.com/Roughosing/RestServicePython/blob/master/CC_Results.png "Results")
 
-As the server needs to be restarted each time the workers complete their process, the time taken for each n workers to complete the task was logged by the code, then graphed manually using Google sheets, rather than using pyplot. 
+Once the work has been distributed the Manager needs to be restarted in order to give any new workers additional work, as such each time the worker(s) complete their processes, the time taken for each n workers to complete the task was logged by the code, then graphed manually using Google sheets, rather than using pyplot. 
 
 The results i.e. a list of the cyclomatic complexities for each .py file in the commit are sent back to the Manager using the POST request, these are then added to a list of all the other results computed by the workers.
 
