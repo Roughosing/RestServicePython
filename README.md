@@ -1,5 +1,5 @@
 # RestServicePython
-Python Worker-Manager distributed system for calculating code complexity
+Python Worker-Manager distributed system for calculating code complexity -- Gregory Penrose ID: 14316190
 
 This python code requires a few dependecies in order to run, most notably Flask and Radon. 
 If you do not currently have these installed on python you can add both of them via pip as so:
