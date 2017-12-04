@@ -12,6 +12,7 @@ def set_repo():
         repo = clone_repository(repo_url, repo_path)
     return repo
 
+# computes the complexity of all .py files in the given list
 def compute_complexity(source):
     result =[]
     # get cc blocks
@@ -23,6 +24,7 @@ def compute_complexity(source):
         result.append(func.name+"- CC Rank:"+cc_rank(func.complexity))
     return result
 
+# walks through the tree of the given repo and stores any .py files in a list
 def get_data(tree, repo):
     sources = []
     for entry in tree:
@@ -34,12 +36,14 @@ def get_data(tree, repo):
                 sources += (get_data(new_tree, repo))
     return sources
 
+# decodes the files stored in the list
 def extract_files(sources):
     files = []
     for source in sources:
         files.append(repo[source.id].data.decode("utf-8"))
     return files
 
+# ask for work from the given iurl
 def get_work(repo):
     response = requests.get('http://127.0.0.1:5000/work', params={'key': 'value'})
     response.encoding = 'utf-8'
@@ -50,19 +54,21 @@ def get_work(repo):
     files = extract_files(sources)
     return files, id
 
+# compute the complexity of each file in the given list
 def do_work(work):
     results = []
     for file in work:
         results.append(compute_complexity(file))
     return results
 
+# post results to the url 
 def send_results(result):
     result = {'Result' : result}
     post = requests.post('http://127.0.0.1:5000/results', json=result)
 
 if __name__ == '__main__':
     bool = True
-    while bool:
+    while bool: #run until work is finished
         repo = set_repo()
         work, id = get_work(repo)
         print(id)
