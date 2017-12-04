@@ -4,6 +4,7 @@ from pygit2 import Repository, clone_repository
 
 app = Flask(__name__)
 
+# pulls repo from url and stores clone
 def set_repo():
     try:
         repo = Repository('./repo')
@@ -13,13 +14,14 @@ def set_repo():
         repo = clone_repository(repo_url, repo_path)
     return repo
 
+# walk through commits in the given repo and store in list
 def get_commits(repo):
     commits = []
     for commit in repo.walk(repo.head.target):
         commits.append(repo.get(commit.id))
     return commits
 
-
+# give work to any worker who access the url
 @app.route('/work' , methods=['GET'])
 def give_work():
     repo = set_repo()
@@ -36,6 +38,7 @@ def give_work():
     except:
         return None
 
+# store results that are sent to this url
 @app.route('/results', methods=['POST'])
 def store_result():
     result = request.json
