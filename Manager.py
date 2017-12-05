@@ -34,6 +34,7 @@ def give_work():
         if next_task == 350:
             end_time = time() - start_time
             print(end_time)
+            # print(result_list) # prints the result list containing the cyclomatic complexity of the py files in the commit
         return jsonify({'commit': str(commit_hash.id), 'id': next_task})
     except:
         return None
