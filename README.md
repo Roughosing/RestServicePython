@@ -18,7 +18,7 @@ To execute from command line run these commands:
 
     python ./Manager.py
     
-    python -/Worker.py      # Multiple workers can be spawned, but each needs its own terminal to run in
+    python ./Worker.py      # Multiple workers can be spawned, but each needs its own terminal to run in
 
 Since my computer contains only a QuadCore Processor, I was only able to get to 4 Worker nodes (more could be added, but with a quad core only 4 processes were able to be computed concurrently so the decrease in runtime begins to level off after 4 workers) before overloading the processor. With the addition of each worker node, the runtime for calculating the complexity of each commit in a repo is considerably cut. The image belows helps in indicating the reduction of computation time with the addition of each worker.
 
